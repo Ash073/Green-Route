@@ -5,7 +5,7 @@ import app from './app.js';
 
 dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 const NODE_ENV = process.env.NODE_ENV || 'development';
 
 const logger = createLogger('Server');
