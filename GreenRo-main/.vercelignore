@@ -1,0 +1,10 @@
+_redirects
+build/
+.env
+.env.local
+.env.production
+.env.development
+.DS_Store
+.vscode/
+*.log
+npm-debug.log*
