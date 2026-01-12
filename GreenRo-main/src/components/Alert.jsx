@@ -121,4 +121,6 @@ export const InfoMessage = ({ message, onDismiss }) => {
   );
 };
 
-export default { ErrorMessage, SuccessMessage, InfoMessage };
+const Alert = { ErrorMessage, SuccessMessage, InfoMessage };
+
+export default Alert;
