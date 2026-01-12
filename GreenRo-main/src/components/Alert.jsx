@@ -39,14 +39,14 @@ export const ErrorMessage = ({ message, onDismiss }) => {
 };
 
 export const SuccessMessage = ({ message, onDismiss }) => {
-  if (!message) return null;
-
   React.useEffect(() => {
-    if (onDismiss) {
+    if (message && onDismiss) {
       const timer = setTimeout(onDismiss, 3000);
       return () => clearTimeout(timer);
     }
-  }, [onDismiss]);
+  }, [message, onDismiss]);
+
+  if (!message) return null;
 
   return (
     <div style={{

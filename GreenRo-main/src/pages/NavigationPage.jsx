@@ -386,7 +386,6 @@ export default function NavigationPage() {
     } catch (err) {
       console.error("❌ Error saving trip:", err);
       console.error("Error details:", err.response?.data);
-      console.error("Trip data sent:", tripData);
       
       if (err.response?.status === 401) {
         alert("Please log in to save your trip and track your carbon savings!");
