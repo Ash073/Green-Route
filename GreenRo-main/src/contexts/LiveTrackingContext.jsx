@@ -149,9 +149,11 @@ function PersistentLiveTracker({ tripId, isMinimized, onToggleMinimize, onClose 
           cursor: "pointer",
           transition: "all 0.3s ease"
         }}
-        onClick={onToggleMinimize}
       >
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div 
+          style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}
+          onClick={onToggleMinimize}
+        >
           <div>
             <div style={{ fontSize: "0.85rem", opacity: 0.9 }}>Active Trip</div>
             <div style={{ fontSize: "1.1rem", fontWeight: "600", marginTop: "0.25rem" }}>
@@ -208,7 +210,10 @@ function PersistentLiveTracker({ tripId, isMinimized, onToggleMinimize, onClose 
           </div>
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <button
-              onClick={onToggleMinimize}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleMinimize();
+              }}
               style={{
                 background: "rgba(255, 255, 255, 0.2)",
                 border: "none",
@@ -222,7 +227,10 @@ function PersistentLiveTracker({ tripId, isMinimized, onToggleMinimize, onClose 
               ➖ Minimize
             </button>
             <button
-              onClick={() => setShowCancelModal(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCancelModal(true);
+              }}
               style={{
                 background: "#e74c3c",
                 border: "none",

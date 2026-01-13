@@ -175,7 +175,10 @@ export default function PersistentLiveTracker({ tripId, isMinimized, onToggleMin
           </div>
           <div style={{ display: "flex", gap: "0.5rem" }}>
             <button
-              onClick={onToggleMinimize}
+              onClick={(e) => {
+                e.stopPropagation();
+                onToggleMinimize();
+              }}
               style={{
                 background: "rgba(255, 255, 255, 0.2)",
                 border: "none",
@@ -189,7 +192,10 @@ export default function PersistentLiveTracker({ tripId, isMinimized, onToggleMin
               ➖ Minimize
             </button>
             <button
-              onClick={() => setShowCancelModal(true)}
+              onClick={(e) => {
+                e.stopPropagation();
+                setShowCancelModal(true);
+              }}
               style={{
                 background: "#e74c3c",
                 border: "none",

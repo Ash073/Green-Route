@@ -107,7 +107,7 @@ export default function LandingPage() {
           </div>
           <div className="hero-navigation" style={{ display: 'flex', gap: '2rem', justifyContent: 'center' }}>
             <button 
-              onClick={() => scrollToSection('about-section')}
+              onClick={() => scrollToSection('features')}
               style={{
                 background: 'none',
                 border: 'none',
@@ -621,30 +621,128 @@ export default function LandingPage() {
               <h3>🌱 GreenRoute</h3>
               <p>Navigating towards a sustainable future</p>
               <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem', fontSize: '1.5rem' }}>
-                <a href="#facebook" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>📘</a>
-                <a href="#twitter" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>🐦</a>
-                <a href="#instagram" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>📷</a>
-                <a href="#linkedin" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>💼</a>
+                <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>📱</a>
+                <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>👤</a>
+                <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>📷</a>
+                <a href="https://linkedin.com" target="_blank" rel="noopener noreferrer" style={{ transition: 'transform 0.3s' }} onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.2)'} onMouseLeave={(e) => e.currentTarget.style.transform = 'none'}>💼</a>
               </div>
             </div>
             <div className="footer-links">
               <div className="footer-column">
-                <h4>🎯 Product</h4>
-                <a href="#features">✨ Features</a>
-                <a href="#pricing">💎 Pricing</a>
-                <a href="#download">📥 Download</a>
+                <h4>🧪 Product</h4>
+                <a href="#features" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('🌟 GreenRoute Features:\n\n' +
+                    '🗺️ Smart Route Planning - AI-powered eco-friendly route suggestions\n' +
+                    '🚗 Rideshare Matching - Connect with drivers and passengers\n' +
+                    '📊 Real-time Analytics - Track your carbon savings and emissions\n' +
+                    '🔴 Live Tracking - Monitor your trips in real-time\n' +
+                    '💰 Cost Savings - Share rides and split costs\n' +
+                    '🌱 Carbon Footprint Tracking - See your environmental impact\n' +
+                    '📱 Cross-Platform Support - Available on web and mobile\n' +
+                    '⚡ Instant Notifications - Get matched with rides quickly');
+                }}>✨ Features</a>
+                <a href="#benefits" onClick={(e) => { e.preventDefault(); scrollToSection('benefits'); }}>💎 Pricing</a>
+                <a href="#download" onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: 'smooth' }); }}>📥 Download</a>
               </div>
               <div className="footer-column">
                 <h4>🏢 Company</h4>
-                <a href="#about">ℹ️ About</a>
-                <a href="#careers">👔 Careers</a>
-                <a href="#contact">📧 Contact</a>
+                <a href="#about" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('About GreenRoute\n\n' +
+                    'GreenRoute is a revolutionary eco-friendly ridesharing platform dedicated to reducing carbon emissions and promoting sustainable transportation. ' +
+                    'Our mission is to make every journey count towards a greener future.\n\n' +
+                    '🌍 Vision: Create a sustainable transportation ecosystem\n' +
+                    '💚 Mission: Reduce carbon footprint through smart ridesharing\n' +
+                    '🎯 Goal: Connect environmentally conscious travelers\n\n' +
+                    'We combine cutting-edge technology with environmental responsibility to provide the best eco-friendly transportation solution.');
+                }}>ℹ️ About</a>
+                <a href="#careers" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('Join GreenRoute Team!\n\n' +
+                    '👤 User Role:\n' +
+                    '• Book eco-friendly rides\n' +
+                    '• Track your carbon savings\n' +
+                    '• Share rides with verified passengers\n' +
+                    '• Access real-time analytics\n' +
+                    '• Earn rewards for sustainable choices\n\n' +
+                    '🚗 Driver Role:\n' +
+                    '• Offer rides and earn income\n' +
+                    '• Build your eco-friendly reputation\n' +
+                    '• Access smart route optimization\n' +
+                    '• Connect with passengers instantly\n' +
+                    '• Track your environmental impact\n' +
+                    '• Flexible working hours\n\n' +
+                    'Both roles contribute to a greener planet! 🌱');
+                }}>👔 Careers</a>
+                <a href="#contact" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('Contact GreenRoute\n\n' +
+                    '📧 Email: sayyedashif73@gmail.com\n\n' +
+                    'We\'d love to hear from you!\n' +
+                    'For support, partnerships, or inquiries, reach out to us.');
+                }}>📧 Contact</a>
               </div>
               <div className="footer-column">
                 <h4>🛟 Support</h4>
-                <a href="#help">❓ Help Center</a>
-                <a href="#privacy">🔐 Privacy</a>
-                <a href="#terms">📜 Terms</a>
+                <a href="#help" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('Help Center\n\n' +
+                    '📚 Resources:\n' +
+                    '• Getting Started Guide\n' +
+                    '• FAQ Section\n' +
+                    '• Video Tutorials\n' +
+                    '• Troubleshooting Tips\n\n' +
+                    '📧 Email Support: sayyedashif73@gmail.com\n\n' +
+                    'We\'re here to help 24/7!');
+                }}>❓ Help Center</a>
+                <a href="#privacy" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('Privacy & Security\n\n' +
+                    '🔐 Your Data is Safe With Us:\n\n' +
+                    'For Users:\n' +
+                    '• End-to-end encryption of personal data\n' +
+                    '• Secure payment processing\n' +
+                    '• Private trip history\n' +
+                    '• No sharing of data with third parties\n' +
+                    '• Two-factor authentication available\n\n' +
+                    'For Drivers:\n' +
+                    '• Verified identity protection\n' +
+                    '• Secure earnings & payment info\n' +
+                    '• Protected location data\n' +
+                    '• Driver background verification\n' +
+                    '• Safe passenger matching system\n\n' +
+                    '✓ GDPR Compliant\n' +
+                    '✓ SSL Encrypted Connections\n' +
+                    '✓ Regular Security Audits\n' +
+                    '✓ Data Anonymization');
+                }}>🔐 Privacy</a>
+                <a href="#terms" onClick={(e) => { 
+                  e.preventDefault(); 
+                  alert('Terms of Service\n\n' +
+                    '📜 By using GreenRoute, you agree to:\n\n' +
+                    '1. Account Responsibility\n' +
+                    '   • Maintain accurate profile information\n' +
+                    '   • Keep login credentials secure\n' +
+                    '   • Report suspicious activity\n\n' +
+                    '2. Acceptable Use\n' +
+                    '   • Respect other users and drivers\n' +
+                    '   • Provide accurate trip information\n' +
+                    '   • No fraudulent activities\n\n' +
+                    '3. Service Usage\n' +
+                    '   • Comply with local transportation laws\n' +
+                    '   • Honor confirmed ride bookings\n' +
+                    '   • Timely cancellation when needed\n\n' +
+                    '4. Payment Terms\n' +
+                    '   • Pay for services as agreed\n' +
+                    '   • Valid payment method required\n' +
+                    '   • No chargebacks for completed trips\n\n' +
+                    '5. Liability\n' +
+                    '   • Use service at your own risk\n' +
+                    '   • GreenRoute facilitates connections\n' +
+                    '   • Users responsible for their safety\n\n' +
+                    'Last updated: January 2026');
+                }}>📜 Terms</a>
               </div>
             </div>
           </div>

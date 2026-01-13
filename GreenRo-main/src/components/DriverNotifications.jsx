@@ -102,19 +102,25 @@ export default function DriverNotifications({ driverId }) {
 
         <div
           style={{
-            background: "#fff3cd",
-            border: "1px solid #ffc107",
-            borderRadius: "8px",
-            padding: "1rem",
+            background: "#ffe6e6",
+            border: "2px solid #e74c3c",
+            borderRadius: "12px",
+            padding: "1.25rem",
             marginBottom: "1.5rem",
             textAlign: "left"
           }}
         >
-          <p style={{ margin: 0, fontSize: "0.9rem", color: "#856404" }}>
+          <p style={{ margin: 0, fontSize: "1rem", color: "#c0392b", fontWeight: "bold" }}>
+            📋 Cancellation Reason:
+          </p>
+          <p style={{ margin: "0.5rem 0 1rem 0", fontSize: "1.05rem", color: "#2c3e50", fontWeight: "500", padding: "0.75rem", background: "white", borderRadius: "6px" }}>
+            {activeNotification.reason || "No reason provided"}
+          </p>
+          <p style={{ margin: 0, fontSize: "0.9rem", color: "#7f8c8d" }}>
             <strong>Trip ID:</strong> {activeNotification.tripId?.toString().slice(-8) || "N/A"}
           </p>
-          <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.85rem", color: "#856404" }}>
-            Cancelled at: {new Date(activeNotification.createdAt).toLocaleString()}
+          <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.85rem", color: "#7f8c8d" }}>
+            <strong>Cancelled at:</strong> {new Date(activeNotification.createdAt).toLocaleString()}
           </p>
         </div>
 

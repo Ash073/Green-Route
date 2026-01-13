@@ -5,6 +5,9 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
   const [driverOffer, setDriverOffer] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [responding, setResponding] = useState(false);
+  const [showDriverProfile, setShowDriverProfile] = useState(false);
+  const [driverDetails, setDriverDetails] = useState(null);
+  const [loadingProfile, setLoadingProfile] = useState(false);
 
   useEffect(() => {
     // Don't poll if no active trip
@@ -37,6 +40,21 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
     return () => clearInterval(interval);
   }, [userId, hasActiveTrip, pollInterval, onMatch, driverOffer]);
 
+  const handleViewProfile = async () => {
+    if (!driverOffer?.driverId) return;
+    
+    try {
+      setLoadingProfile(true);
+      const response = await apiClient.get(`/trips/driver-profile/${driverOffer.driverId}`);
+      setDriverDetails(response.data);
+      setShowDriverProfile(true);
+    } catch (error) {
+      alert("Error loading driver profile: " + error.message);
+    } finally {
+      setLoadingProfile(false);
+    }
+  };
+
   const handleUserResponse = async (response) => {
     if (!driverOffer) return;
 
@@ -56,6 +74,8 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
 
       setShowModal(false);
       setDriverOffer(null);
+      setShowDriverProfile(false);
+      setDriverDetails(null);
     } catch (error) {
       alert("Error responding to driver: " + error.message);
     } finally {
@@ -64,6 +84,133 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
   };
 
   if (!showModal || !driverOffer) return null;
+
+  // Driver Profile Modal
+  if (showDriverProfile && driverDetails) {
+    return (
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          background: "rgba(0, 0, 0, 0.85)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 10000,
+          padding: "1rem",
+          overflowY: "auto"
+        }}
+        onClick={() => setShowDriverProfile(false)}
+      >
+        <div
+          style={{
+            background: "white",
+            borderRadius: "16px",
+            padding: "2rem",
+            maxWidth: "600px",
+            width: "90%",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.5)",
+            maxHeight: "90vh",
+            overflowY: "auto"
+          }}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <h2 style={{ margin: "0 0 1.5rem 0", color: "#2c3e50" }}>👤 Driver Profile</h2>
+          
+          <div style={{ background: "#f8f9fa", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" }}>
+            <h3 style={{ margin: "0 0 1rem 0", color: "#27ae60" }}>{driverDetails.name}</h3>
+            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
+              <div>
+                <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Rating</p>
+                <p style={{ margin: "0.25rem 0", color: "#f39c12", fontWeight: "600", fontSize: "1.2rem" }}>
+                  ⭐ {driverDetails.averageRating || "4.8"}/5
+                </p>
+              </div>
+              <div>
+                <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Total Trips</p>
+                <p style={{ margin: "0.25rem 0", color: "#3498db", fontWeight: "600", fontSize: "1.2rem" }}>
+                  🚗 {driverDetails.totalTrips || 0}
+                </p>
+              </div>
+            </div>
+            <div>
+              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Vehicle</p>
+              <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontWeight: "500", textTransform: "capitalize" }}>
+                {driverDetails.vehicleType || "Economy Car"}
+              </p>
+            </div>
+            <div style={{ marginTop: "0.75rem" }}>
+              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Carbon Saved</p>
+              <p style={{ margin: "0.25rem 0", color: "#27ae60", fontWeight: "600" }}>
+                🌱 {driverDetails.carbonSaved || 0} kg CO₂
+              </p>
+            </div>
+          </div>
+
+          <h4 style={{ margin: "1.5rem 0 1rem 0", color: "#2c3e50" }}>📊 Recent Trip History</h4>
+          <div style={{ maxHeight: "300px", overflowY: "auto" }}>
+            {driverDetails.recentTrips && driverDetails.recentTrips.length > 0 ? (
+              driverDetails.recentTrips.map((trip, idx) => (
+                <div 
+                  key={idx}
+                  style={{
+                    background: trip.status === "cancelled" ? "#fff5f5" : "#f0f9ff",
+                    border: trip.status === "cancelled" ? "1px solid #feb2b2" : "1px solid #bfdbfe",
+                    borderRadius: "8px",
+                    padding: "1rem",
+                    marginBottom: "0.75rem"
+                  }}
+                >
+                  <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+                    <span style={{ fontWeight: "600", color: trip.status === "cancelled" ? "#e74c3c" : "#27ae60", textTransform: "capitalize" }}>
+                      {trip.status === "cancelled" ? "❌ Cancelled" : "✅ " + trip.status}
+                    </span>
+                    <span style={{ fontSize: "0.8rem", color: "#7f8c8d" }}>
+                      {new Date(trip.createdAt).toLocaleDateString()}
+                    </span>
+                  </div>
+                  <p style={{ margin: "0.25rem 0", fontSize: "0.9rem", color: "#2c3e50" }}>
+                    <strong>From:</strong> {trip.origin?.name || "N/A"}
+                  </p>
+                  <p style={{ margin: "0.25rem 0", fontSize: "0.9rem", color: "#2c3e50" }}>
+                    <strong>To:</strong> {trip.destination?.name || "N/A"}
+                  </p>
+                  {trip.status === "cancelled" && trip.cancellationReason && (
+                    <p style={{ margin: "0.5rem 0 0 0", fontSize: "0.85rem", color: "#e74c3c", fontStyle: "italic", background: "white", padding: "0.5rem", borderRadius: "4px" }}>
+                      <strong>Reason:</strong> {trip.cancellationReason}
+                    </p>
+                  )}
+                </div>
+              ))
+            ) : (
+              <p style={{ color: "#7f8c8d", textAlign: "center", padding: "1rem" }}>No recent trips available</p>
+            )}
+          </div>
+
+          <button
+            onClick={() => setShowDriverProfile(false)}
+            style={{
+              background: "#3498db",
+              color: "white",
+              border: "none",
+              padding: "1rem",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "1rem",
+              fontWeight: "600",
+              width: "100%",
+              marginTop: "1.5rem"
+            }}
+          >
+            Close Profile
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div
@@ -137,9 +284,29 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
           </div>
         </div>
 
-        <p style={{ color: "#7f8c8d", marginBottom: "1.5rem", fontSize: "0.95rem" }}>
+        <p style={{ color: "#7f8c8d", marginBottom: "1rem", fontSize: "0.95rem" }}>
           Would you like to confirm this driver?
         </p>
+
+        <button
+          onClick={handleViewProfile}
+          disabled={loadingProfile}
+          style={{
+            background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+            color: "white",
+            border: "none",
+            padding: "0.75rem 1.5rem",
+            borderRadius: "8px",
+            cursor: loadingProfile ? "wait" : "pointer",
+            fontSize: "0.9rem",
+            fontWeight: "600",
+            marginBottom: "1.5rem",
+            width: "100%",
+            opacity: loadingProfile ? 0.6 : 1
+          }}
+        >
+          {loadingProfile ? "Loading..." : "👤 View Full Profile & Trip History"}
+        </button>
 
         <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
           <button
