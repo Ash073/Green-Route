@@ -218,6 +218,85 @@ router.patch('/:tripId/status', asyncHandler(async (req, res, next) => {
   });
 }));
 
+// Cancel trip with reason and driver notification
+router.patch('/:tripId/cancel', asyncHandler(async (req, res, next) => {
+  const { tripId } = req.params;
+  const { reason, cancelledBy } = req.body;
+  const logger = createLogger('TripCancel');
+  
+  if (!reason || reason.trim() === '') {
+    return next(new AppError('Cancellation reason is required', 400));
+  }
+  
+  const trip = await Trip.findById(tripId);
+  
+  if (!trip) {
+    return next(new AppError('Trip not found', 404));
+  }
+  
+  // Check authorization
+  const isUser = trip.userId.toString() === req.user.userId.toString();
+  const isDriver = trip.driverId && trip.driverId.toString() === req.user.userId.toString();
+  
+  if (!isUser && !isDriver) {
+    return next(new AppError('You do not have permission to cancel this trip', 403));
+  }
+  
+  trip.status = 'cancelled';
+  trip.cancellationReason = reason;
+  trip.cancelledBy = cancelledBy || (isUser ? 'user' : 'driver');
+  trip.cancelledAt = new Date();
+  
+  await trip.save();
+  
+  // Notify the other party
+  if (trip.driverId && isUser) {
+    // User cancelled - notify driver
+    const driver = await User.findById(trip.driverId);
+    if (driver) {
+      logger.info(`User cancelled trip ${tripId}. Driver ${driver.name} notified. Reason: ${reason}`);
+      // In production, send push notification or SMS to driver here
+      // For now, we'll store a notification flag that driver can poll
+      await User.findByIdAndUpdate(trip.driverId, {
+        $push: {
+          notifications: {
+            type: 'trip_cancelled',
+            tripId: trip._id,
+            message: `Trip cancelled by user. Reason: ${reason}`,
+            createdAt: new Date()
+          }
+        }
+      });
+    }
+  } else if (trip.userId && isDriver) {
+    // Driver cancelled - notify user
+    const user = await User.findById(trip.userId);
+    if (user) {
+      logger.info(`Driver cancelled trip ${tripId}. User ${user.name} notified. Reason: ${reason}`);
+      await User.findByIdAndUpdate(trip.userId, {
+        $push: {
+          notifications: {
+            type: 'trip_cancelled',
+            tripId: trip._id,
+            message: `Trip cancelled by driver. Reason: ${reason}`,
+            createdAt: new Date()
+          }
+        }
+      });
+    }
+  }
+  
+  // Invalidate cached stats
+  delCache(`stats:${trip.userId}`);
+  
+  res.json({
+    success: true,
+    message: 'Trip cancelled successfully',
+    trip,
+    notificationSent: !!trip.driverId || !!trip.userId
+  });
+}));
+
 // Delete a trip
 router.delete('/:tripId', asyncHandler(async (req, res, next) => {
   const { tripId } = req.params;
