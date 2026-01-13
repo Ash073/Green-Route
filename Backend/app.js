@@ -159,7 +159,8 @@ app.get('/api/routes-legacy', (req, res) => {
 
 // SPA Static Files - Serve React build
 const __dirname = path.resolve();
-app.use(express.static(path.join(__dirname, "GreenRo-main/dist")));
+const buildPath = path.join(__dirname, "../GreenRo-main/build");
+app.use(express.static(buildPath));
 
 // SPA Catch-all route - Redirect all routes to index.html for client-side routing
 app.get("*", (req, res) => {
@@ -167,7 +168,7 @@ app.get("*", (req, res) => {
   if (req.path.startsWith('/api')) {
     return res.status(404).json({ success: false, message: 'API endpoint not found' });
   }
-  res.sendFile(path.join(__dirname, "GreenRo-main/dist", "index.html"));
+  res.sendFile(path.join(buildPath, "index.html"));
 });
 
 // 404 and error handling
