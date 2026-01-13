@@ -67,15 +67,25 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
       );
 
       if (response === "accepted") {
-        alert("✅ Great! You accepted the driver match. The driver will be notified.");
+        // First, load the driver profile to show the user
+        try {
+          const profileResponse = await apiClient.get(`/trips/driver-profile/${driverOffer.driverId}`);
+          setDriverDetails(profileResponse.data);
+          setShowDriverProfile(true);
+          // Don't navigate yet, let user review profile first
+          alert("✅ Great! You accepted the driver. Please review their profile before proceeding to tracking.");
+        } catch (error) {
+          alert("✅ Trip accepted! Starting live tracking...");
+          setShowModal(false);
+          setDriverOffer(null);
+          // Navigate if profile loading fails
+          if (onMatch) onMatch(driverOffer);
+        }
       } else {
         alert("❌ You rejected this driver. Looking for other matches...");
+        setShowModal(false);
+        setDriverOffer(null);
       }
-
-      setShowModal(false);
-      setDriverOffer(null);
-      setShowDriverProfile(false);
-      setDriverDetails(null);
     } catch (error) {
       alert("Error responding to driver: " + error.message);
     } finally {
@@ -191,9 +201,15 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
           </div>
 
           <button
-            onClick={() => setShowDriverProfile(false)}
+            onClick={() => {
+              setShowDriverProfile(false);
+              setShowModal(false);
+              setDriverOffer(null);
+              setDriverDetails(null);
+              if (onMatch) onMatch(driverOffer);
+            }}
             style={{
-              background: "#3498db",
+              background: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
               color: "white",
               border: "none",
               padding: "1rem",
@@ -202,10 +218,29 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
               fontSize: "1rem",
               fontWeight: "600",
               width: "100%",
-              marginTop: "1.5rem"
+              marginTop: "1.5rem",
+              boxShadow: "0 4px 12px rgba(16, 185, 129, 0.3)"
             }}
           >
-            Close Profile
+            🗺️ Proceed to Live Tracking
+          </button>
+
+          <button
+            onClick={() => setShowDriverProfile(false)}
+            style={{
+              background: "#95a5a6",
+              color: "white",
+              border: "none",
+              padding: "0.75rem",
+              borderRadius: "8px",
+              cursor: "pointer",
+              fontSize: "0.9rem",
+              fontWeight: "600",
+              width: "100%",
+              marginTop: "0.75rem"
+            }}
+          >
+            Back to Offer
           </button>
         </div>
       </div>

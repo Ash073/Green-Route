@@ -28,23 +28,29 @@ export default function PersistentLiveTracker({ tripId, isMinimized, onToggleMin
 
   // Initialize map when expanded
   useEffect(() => {
-    if (isMinimized || !mapContainerRef.current) return;
+    if (isMinimized) return;
     
-    if (!mapRef.current) {
-      mapboxgl.accessToken = "pk.eyJ1IjoieWVzYXN3aW5pMTUwOCIsImEiOiJjbWZjd3l0ZWkwM2FjMmxzYmR1d2liYWsxIn0.hL64DI3xihWFknOwxEa8qA";
-      const map = new mapboxgl.Map({
-        container: mapContainerRef.current,
-        style: "mapbox://styles/mapbox/streets-v12",
-        center: [72.8777, 19.0760],
-        zoom: 12,
-      });
-      mapRef.current = map;
-    }
+    // Give the DOM time to render before initializing map
+    setTimeout(() => {
+      if (!mapContainerRef.current) return;
+      
+      if (!mapRef.current) {
+        mapboxgl.accessToken = "pk.eyJ1IjoieWVzYXN3aW5pMTUwOCIsImEiOiJjbWZjd3l0ZWkwM2FjMmxzYmR1d2liYWsxIn0.hL64DI3xihWFknOwxEa8qA";
+        const map = new mapboxgl.Map({
+          container: mapContainerRef.current,
+          style: "mapbox://styles/mapbox/streets-v12",
+          center: [72.8777, 19.0760],
+          zoom: 12,
+        });
+        mapRef.current = map;
+      } else if (mapRef.current) {
+        // Resize map when re-expanding
+        mapRef.current.resize();
+      }
+    }, 0);
 
     return () => {
-      if (mapRef.current && isMinimized) {
-        // Don't remove map when minimizing, just when unmounting
-      }
+      // Don't destroy map on minimize, just leave it
     };
   }, [isMinimized]);
 
@@ -116,7 +122,9 @@ export default function PersistentLiveTracker({ tripId, isMinimized, onToggleMin
           cursor: "pointer",
           transition: "all 0.3s ease"
         }}
-        onClick={onToggleMinimize}
+        onClick={() => {
+          onToggleMinimize();
+        }}
       >
         <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
           <div>

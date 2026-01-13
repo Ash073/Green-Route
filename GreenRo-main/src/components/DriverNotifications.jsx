@@ -19,21 +19,23 @@ export default function DriverNotifications({ driverId }) {
           n => n.type === 'trip_cancelled' && !n.read
         );
 
-        if (unreadCancellations.length > 0) {
+        if (unreadCancellations.length > 0 && !showModal) {
           setNotifications(unreadCancellations);
           setActiveNotification(unreadCancellations[0]);
           setShowModal(true);
+          // Optional: Play notification sound
+          console.log('🔔 New cancellation notification:', unreadCancellations[0]);
         }
       } catch (error) {
-        console.warn("Error fetching notifications:", error);
+        console.error("Error fetching notifications:", error);
       }
     };
 
-    // Poll every 5 seconds
+    // Poll every 3 seconds for faster response
     fetchNotifications();
-    const interval = setInterval(fetchNotifications, 5000);
+    const interval = setInterval(fetchNotifications, 3000);
     return () => clearInterval(interval);
-  }, [driverId]);
+  }, [driverId, showModal]);
 
   const handleDismiss = async () => {
     if (!activeNotification) return;
