@@ -1,6 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
+import path from 'path';
 import authRoutes from './authRoutes.js';
 import tripRoutes from './tripRoutes.js';
 import routesRoutes from './routesRoutes.js';
@@ -154,6 +155,19 @@ app.get('/api/routes-legacy', (req, res) => {
     destination,
     mode: mode || 'driving',
   });
+});
+
+// SPA Static Files - Serve React build
+const __dirname = path.resolve();
+app.use(express.static(path.join(__dirname, "GreenRo-main/dist")));
+
+// SPA Catch-all route - Redirect all routes to index.html for client-side routing
+app.get("*", (req, res) => {
+  // Don't redirect API calls
+  if (req.path.startsWith('/api')) {
+    return res.status(404).json({ success: false, message: 'API endpoint not found' });
+  }
+  res.sendFile(path.join(__dirname, "GreenRo-main/dist", "index.html"));
 });
 
 // 404 and error handling
