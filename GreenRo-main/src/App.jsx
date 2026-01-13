@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
+import { LiveTrackingProvider, useLiveTracking } from "./contexts/LiveTrackingContext";
 import LandingPage from "./pages/LandingPage";
 import LoginPage from "./pages/LoginPage";
 import SignupPage from "./pages/SignupPage";
@@ -11,6 +12,7 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import LiveTracking from "./pages/LiveTracking";
 import Navbar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import PersistentLiveTracker from "./components/PersistentLiveTracker";
 import "./styles/modern-ui.css";
 import "./styles/premium-rideshare.css";
 
@@ -91,14 +93,33 @@ function AppContent() {
           } 
         />
       </Routes>
+      <LiveTrackingOverlay />
     </Router>
+  );
+}
+
+// Separate component so it can use useLiveTracking inside Router
+function LiveTrackingOverlay() {
+  const { activeTripId, isMinimized, toggleMinimize, stopTracking } = useLiveTracking();
+  
+  if (!activeTripId) return null;
+  
+  return (
+    <PersistentLiveTracker 
+      tripId={activeTripId} 
+      isMinimized={isMinimized}
+      onToggleMinimize={toggleMinimize}
+      onClose={stopTracking}
+    />
   );
 }
 
 function App() {
   return (
     <AuthProvider>
-      <AppContent />
+      <LiveTrackingProvider>
+        <AppContent />
+      </LiveTrackingProvider>
     </AuthProvider>
   );
 }

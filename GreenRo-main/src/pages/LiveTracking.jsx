@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
-import axios from "axios";
+import { useLiveTracking } from "../contexts/LiveTrackingContext";
+import apiClient from "../api/apiClient";
 import mapboxgl from "mapbox-gl";
 import "mapbox-gl/dist/mapbox-gl.css";
 import { SlidingNumber, SlidingNumberBasic } from '../components/ui/SlidingNumberDemo';
@@ -23,6 +24,7 @@ const userEmoji = 0x1F9D1; // 👤 default user icon
 export default function LiveTracking() {
   const { tripId } = useParams();
   const { isAuthenticated, user } = useAuth();
+  const { startTracking } = useLiveTracking();
   const navigate = useNavigate();
   const [info, setInfo] = useState(null);
   const [error, setError] = useState(null);
@@ -42,7 +44,12 @@ export default function LiveTracking() {
     if (user?.userType === 'driver') {
       setIsDriver(true);
     }
-  }, [isAuthenticated, navigate, user]);
+    
+    // Start persistent live tracking for non-drivers
+    if (user?.userType !== 'driver' && tripId) {
+      startTracking(tripId);
+    }
+  }, [isAuthenticated, navigate, user, tripId, startTracking]);
 
   // Initialize Map
   useEffect(() => {
@@ -61,7 +68,6 @@ export default function LiveTracking() {
   // Poll live location based on user role
   useEffect(() => {
     let interval;
-    const token = localStorage.getItem("accessToken");
     
     const fetchLiveLocation = async () => {
       try {
@@ -69,17 +75,15 @@ export default function LiveTracking() {
         
         if (isDriver) {
           // Driver fetches user's location
-          endpoint = `http://localhost:5000/api/trips/${tripId}/live-user`;
+          endpoint = `/trips/${tripId}/live-user`;
           keyPath = 'live';
         } else {
           // User fetches driver's location
-          endpoint = `http://localhost:5000/api/trips/${tripId}/live-driver`;
+          endpoint = `/trips/${tripId}/live-driver`;
           keyPath = 'live';
         }
         
-        const res = await axios.get(endpoint, {
-          headers: { Authorization: `Bearer ${token}` }
-        });
+        const res = await apiClient.get(endpoint);
         
         const liveData = res.data[keyPath] || {};
         setOtherPartyLocation(liveData);

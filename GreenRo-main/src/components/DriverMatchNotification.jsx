@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
+import apiClient from "../api/apiClient";
 
-export default function DriverMatchNotification({ userId, pollInterval = 10000, onMatch }) {
+export default function DriverMatchNotification({ userId, hasActiveTrip = false, pollInterval = 10000, onMatch }) {
   const [driverOffer, setDriverOffer] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [responding, setResponding] = useState(false);
 
   useEffect(() => {
-    if (!userId) return;
+    // Don't poll if no active trip
+    if (!userId || !hasActiveTrip) {
+      setDriverOffer(null);
+      setShowModal(false);
+      return;
+    }
 
     // Poll for driver matches
     const checkForMatches = async () => {
       try {
-        const token = localStorage.getItem("accessToken");
-        const response = await axios.get(
-          `http://localhost:5000/api/trips/check-driver-match/${userId}`,
-          { headers: { Authorization: `Bearer ${token}` } }
+        const response = await apiClient.get(
+          `/trips/check-driver-match/${userId}`
         );
 
         if (response.data.driverMatch && !driverOffer) {
@@ -32,19 +35,17 @@ export default function DriverMatchNotification({ userId, pollInterval = 10000, 
     checkForMatches(); // Check immediately on mount
 
     return () => clearInterval(interval);
-  }, [userId, pollInterval, onMatch, driverOffer]);
+  }, [userId, hasActiveTrip, pollInterval, onMatch, driverOffer]);
 
   const handleUserResponse = async (response) => {
     if (!driverOffer) return;
 
     try {
       setResponding(true);
-      const token = localStorage.getItem("accessToken");
       
-      await axios.patch(
-        `http://localhost:5000/api/trips/${driverOffer.tripId}/user-response`,
-        { response },
-        { headers: { Authorization: `Bearer ${token}` } }
+      await apiClient.patch(
+        `/trips/${driverOffer.tripId}/user-response`,
+        { response }
       );
 
       if (response === "accepted") {
@@ -115,9 +116,15 @@ export default function DriverMatchNotification({ userId, pollInterval = 10000, 
               </p>
             </div>
             <div>
-              <p style={{ margin: "0.5rem 0", color: "#7f8c8d", fontSize: "0.9rem" }}>Vehicle</p>
-              <p style={{ margin: "0.25rem 0", color: "#3498db", fontWeight: "600" }}>
-                {driverOffer.vehicle || "Economy Car"}
+              <p style={{ margin: "0.5rem 0", color: "#7f8c8d", fontSize: "0.9rem" }}>Vehicle Type</p>
+              <p style={{ margin: "0.25rem 0", color: "#3498db", fontWeight: "600", textTransform: "capitalize" }}>
+                {driverOffer.vehicleType === "bike" && "🏍️ "}
+                {driverOffer.vehicleType === "scooter" && "🛵 "}
+                {driverOffer.vehicleType === "auto" && "🚕 "}
+                {driverOffer.vehicleType === "car" && "🚗 "}
+                {driverOffer.vehicleType === "van" && "🚐 "}
+                {driverOffer.vehicleType === "cycle" && "🚲 "}
+                {driverOffer.vehicleType || driverOffer.vehicle || "Economy Car"}
               </p>
             </div>
           </div>

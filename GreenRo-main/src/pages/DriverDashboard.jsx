@@ -3,6 +3,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import LoadingSpinner from "../components/LoadingSpinner";
 import VehicleInformation from "../components/VehicleInformation";
+import DriverNotifications from "../components/DriverNotifications";
 import axios from "axios";
 
 export default function DriverDashboard() {
@@ -495,6 +496,9 @@ export default function DriverDashboard() {
         width: "100%"
       }}
     >
+      {/* Driver Notifications for Trip Cancellations */}
+      {user?._id && <DriverNotifications driverId={user._id} />}
+      
       {/* Route Selection Modal */}
       {showRouteModal && (
         <div style={{

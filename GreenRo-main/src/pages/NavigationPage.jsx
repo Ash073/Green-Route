@@ -454,7 +454,10 @@ export default function NavigationPage() {
 
   return (
     <div className="page-container" style={{ maxWidth: "600px" }}>
-      <DriverMatchNotification userId={user?._id || user?.id} />
+      <DriverMatchNotification 
+        userId={user?._id || user?.id} 
+        hasActiveTrip={isRidePosted && !!savedTripId}
+      />
       
       <div style={{ marginBottom: "2rem", textAlign: "center" }}>
         <h2 style={{ margin: "0 0 0.5rem 0", background: "linear-gradient(135deg, #10b981 0%, #3b82f6 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent" }}>🧭 GreenRoute Navigator</h2>

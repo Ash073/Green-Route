@@ -204,4 +204,49 @@ router.post('/logout-all', authenticateToken, asyncHandler(async (req, res, next
   });
 }));
 
+// Get user notifications
+router.get('/notifications/:userId', authenticateToken, asyncHandler(async (req, res, next) => {
+  const { userId } = req.params;
+  
+  // Check authorization
+  if (req.user.userId.toString() !== userId) {
+    return next(new AppError('Unauthorized', 403));
+  }
+
+  const user = await User.findById(userId).select('notifications');
+  
+  if (!user) {
+    return next(new AppError('User not found', 404));
+  }
+
+  res.json({
+    success: true,
+    notifications: user.notifications || []
+  });
+}));
+
+// Mark notification as read
+router.patch('/notifications/:notificationId/mark-read', authenticateToken, asyncHandler(async (req, res, next) => {
+  const { notificationId } = req.params;
+  
+  const user = await User.findOne({ 
+    _id: req.user.userId,
+    'notifications._id': notificationId 
+  });
+
+  if (!user) {
+    return next(new AppError('Notification not found', 404));
+  }
+
+  // Mark as read by removing it (or add a 'read' field if you want to keep history)
+  await User.findByIdAndUpdate(req.user.userId, {
+    $pull: { notifications: { _id: notificationId } }
+  });
+
+  res.json({
+    success: true,
+    message: 'Notification marked as read'
+  });
+}));
+
 export default router;
