@@ -108,6 +108,20 @@ const tripSchema = new mongoose.Schema(
     requestedAt: {
       type: Date,
       default: null
+    },
+    // Cancellation fields
+    cancellationReason: {
+      type: String,
+      default: null
+    },
+    cancelledBy: {
+      type: String,
+      enum: ['user', 'driver', null],
+      default: null
+    },
+    cancelledAt: {
+      type: Date,
+      default: null
     }
   },
   { timestamps: true }

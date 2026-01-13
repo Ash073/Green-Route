@@ -165,6 +165,33 @@ const userSchema = new mongoose.Schema(
         default: 0 // in kg CO2
       }
     },
+    notifications: [{
+      type: {
+        type: String,
+        enum: ['trip_cancelled', 'trip_matched', 'payment_received', 'system_alert'],
+        required: true
+      },
+      tripId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Trip'
+      },
+      message: {
+        type: String,
+        required: true
+      },
+      reason: {
+        type: String,
+        default: null
+      },
+      read: {
+        type: Boolean,
+        default: false
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }],
     createdAt: {
       type: Date,
       default: Date.now

@@ -3815,3 +3815,592 @@
 [2026-01-13T09:11:53.281Z] [Server] [INFO] 🚀 Server running on port 5000
 [2026-01-13T09:11:53.291Z] [Server] [INFO] 📡 Environment: production
 [2026-01-13T09:11:53.300Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T09:14:41.506Z] [ErrorHandler] [WARN] Client Error: Refresh token has been revoked
+{
+  "statusCode": 401,
+  "message": "Refresh token has been revoked",
+  "method": "POST",
+  "path": "/api/auth/refresh",
+  "userId": "anonymous"
+}
+[2026-01-13T09:14:41.523Z] [ErrorHandler] [WARN] Client Error: Refresh token has been revoked
+{
+  "statusCode": 401,
+  "message": "Refresh token has been revoked",
+  "method": "POST",
+  "path": "/api/auth/refresh",
+  "userId": "anonymous"
+}
+[2026-01-13T09:14:41.560Z] [ErrorHandler] [WARN] Client Error: Access token required
+{
+  "statusCode": 401,
+  "message": "Access token required",
+  "method": "POST",
+  "path": "/api/auth/logout",
+  "userId": "anonymous"
+}
+[2026-01-13T11:26:09.643Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:09.831Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:10.081Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:47.703Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:47.749Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:48.294Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:26:48.343Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:29:48.270Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T11:29:48.303Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T11:29:48.323Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T11:29:49.173Z] [DB] [INFO] MongoDB connected successfully to database: greenroute
+[2026-01-13T11:29:49.188Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T11:29:49.198Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T11:29:49.208Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T11:30:46.160Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T11:30:46.171Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T11:30:46.180Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T11:30:46.678Z] [DB] [INFO] MongoDB connected successfully to database: greenroute
+[2026-01-13T11:30:46.693Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T11:30:46.701Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T11:30:46.711Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T11:33:19.592Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:33:19.664Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:33:25.059Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:33:25.107Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:33:25.220Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:33:25.274Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:34:54.319Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:34:54.398Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:01.971Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:02.491Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:02.608Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:02.663Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:02.738Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:08.328Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:08.384Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:08.469Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/details",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:35:08.497Z] [ErrorHandler] [WARN] Client Error: User not found
+{
+  "statusCode": 404,
+  "message": "User not found",
+  "method": "GET",
+  "path": "/api/vehicle/expiry-check",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:51:49.421Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T11:51:49.440Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T11:51:49.452Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T11:51:50.367Z] [DB] [INFO] MongoDB connected successfully to database: greenroute
+[2026-01-13T11:51:50.390Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T11:51:50.400Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T11:51:50.412Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T11:52:56.737Z] [ErrorHandler] [WARN] Client Error: Invalid or expired token
+{
+  "statusCode": 401,
+  "message": "Invalid or expired token",
+  "method": "POST",
+  "path": "/api/auth/logout",
+  "userId": "anonymous"
+}
+[2026-01-13T11:52:56.767Z] [ErrorHandler] [WARN] Client Error: Refresh token has been revoked
+{
+  "statusCode": 401,
+  "message": "Refresh token has been revoked",
+  "method": "POST",
+  "path": "/api/auth/refresh",
+  "userId": "anonymous"
+}
+[2026-01-13T11:53:31.336Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:53:31.423Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:53:59.898Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:53:59.992Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:54:03.465Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:03.704Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/69663282c4a02866412a29e7/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:03.924Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/69663282c4a02866412a29e7/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:37.479Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/69663282c4a02866412a29e7/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:37.566Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/69663282c4a02866412a29e7/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:40.859Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:40.933Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:41.028Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:53.307Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:53.377Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:55:53.463Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:59:11.741Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:59:11.806Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T11:59:11.912Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:00:24.214Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696633c3c4a02866412a2c2c/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:00:24.408Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696633c3c4a02866412a2c2c/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:01:04.908Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696633c3c4a02866412a2c2c/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:01:04.975Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696633c3c4a02866412a2c2c/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:01:13.566Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:01:13.627Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T12:01:13.732Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:28:12.842Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T14:28:12.856Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T14:28:12.865Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T14:28:14.427Z] [DB] [INFO] MongoDB connected successfully to database: greenroute
+[2026-01-13T14:28:14.442Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T14:28:14.452Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T14:28:14.463Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T14:28:50.403Z] [ErrorHandler] [WARN] Client Error: Invalid or expired token
+{
+  "statusCode": 401,
+  "message": "Invalid or expired token",
+  "method": "POST",
+  "path": "/api/auth/logout",
+  "userId": "anonymous"
+}
+[2026-01-13T14:28:50.438Z] [ErrorHandler] [WARN] Client Error: Refresh token has been revoked
+{
+  "statusCode": 401,
+  "message": "Refresh token has been revoked",
+  "method": "POST",
+  "path": "/api/auth/refresh",
+  "userId": "anonymous"
+}
+[2026-01-13T14:29:20.255Z] [ErrorHandler] [ERROR] Server Error: No matching document found for id "6965f3e7549bc70d5c7232ff" version 0 modifiedPaths "currentLocation, currentLocation.coordinates, activeRoute, activeRoute.origin, activeRoute.origin.coordinates, activeRoute.destination, activeRoute.destination.coordinates, vehicleDetails.licensePlateImage, vehicleDetails.verificationDate, notifications"
+{
+  "statusCode": 500,
+  "message": "No matching document found for id \"6965f3e7549bc70d5c7232ff\" version 0 modifiedPaths \"currentLocation, currentLocation.coordinates, activeRoute, activeRoute.origin, activeRoute.origin.coordinates, activeRoute.destination, activeRoute.destination.coordinates, vehicleDetails.licensePlateImage, vehicleDetails.verificationDate, notifications\"",
+  "method": "POST",
+  "path": "/api/trips/driver/set-online",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:29:20.521Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:29:20.598Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:29:20.670Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:30:09.140Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696656e28b230b13bb831761/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:30:11.736Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/696656e28b230b13bb831761/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:30:37.556Z] [TripCancel] [INFO] User cancelled trip 696656e28b230b13bb831761. Driver Ashiff notified. Reason: Change of plans
+[2026-01-13T14:31:52.155Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:31:52.256Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T14:31:52.361Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:25:40.865Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:25:40.948Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:25:41.084Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:26:54.317Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/6966642f8b230b13bb831d22/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:26:54.644Z] [ErrorHandler] [WARN] Client Error: Not authorized to view this trip
+{
+  "statusCode": 403,
+  "message": "Not authorized to view this trip",
+  "method": "GET",
+  "path": "/api/trips/6966642f8b230b13bb831d22/live-driver",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}

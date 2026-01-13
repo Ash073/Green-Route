@@ -250,19 +250,21 @@ router.patch('/:tripId/cancel', asyncHandler(async (req, res, next) => {
   await trip.save();
   
   // Notify the other party
-  if (trip.driverId && isUser) {
+  if (trip.matchedDriverId && isUser) {
     // User cancelled - notify driver
-    const driver = await User.findById(trip.driverId);
+    const driver = await User.findById(trip.matchedDriverId);
     if (driver) {
       logger.info(`User cancelled trip ${tripId}. Driver ${driver.name} notified. Reason: ${reason}`);
       // In production, send push notification or SMS to driver here
       // For now, we'll store a notification flag that driver can poll
-      await User.findByIdAndUpdate(trip.driverId, {
+      await User.findByIdAndUpdate(trip.matchedDriverId, {
         $push: {
           notifications: {
             type: 'trip_cancelled',
             tripId: trip._id,
-            message: `Trip cancelled by user. Reason: ${reason}`,
+            message: `Trip has been cancelled by the user`,
+            reason: reason,
+            read: false,
             createdAt: new Date()
           }
         }
@@ -278,7 +280,9 @@ router.patch('/:tripId/cancel', asyncHandler(async (req, res, next) => {
           notifications: {
             type: 'trip_cancelled',
             tripId: trip._id,
-            message: `Trip cancelled by driver. Reason: ${reason}`,
+            message: `Trip has been cancelled by the driver`,
+            reason: reason,
+            read: false,
             createdAt: new Date()
           }
         }
@@ -293,7 +297,7 @@ router.patch('/:tripId/cancel', asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Trip cancelled successfully',
     trip,
-    notificationSent: !!trip.driverId || !!trip.userId
+    notificationSent: !!trip.matchedDriverId || !!trip.userId
   });
 }));
 
@@ -1255,6 +1259,51 @@ router.post('/user/update-location', asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Location updated',
     currentLocation: user.currentLocation
+  });
+}));
+
+// Get driver profile with trip history including cancelled trips
+router.get('/driver-profile/:driverId', authenticateToken, asyncHandler(async (req, res, next) => {
+  const { driverId } = req.params;
+  
+  // Get driver details
+  const driver = await User.findById(driverId).select('name email phoneNumber vehicleType driverStats');
+  
+  if (!driver) {
+    return next(new AppError('Driver not found', 404));
+  }
+  
+  // Get recent trips (completed and cancelled) - last 10 trips
+  const recentTrips = await Trip.find({
+    $or: [
+      { matchedDriverId: driverId },
+      { driverId: driverId }
+    ]
+  })
+  .select('origin destination status createdAt cancellationReason cancelledBy cancelledAt completedAt')
+  .sort({ createdAt: -1 })
+  .limit(10);
+  
+  res.json({
+    success: true,
+    name: driver.name,
+    email: driver.email,
+    phoneNumber: driver.phoneNumber,
+    vehicleType: driver.vehicleType,
+    totalTrips: driver.driverStats?.totalTrips || 0,
+    averageRating: driver.driverStats?.averageRating || 5,
+    totalEarnings: driver.driverStats?.totalEarnings || 0,
+    carbonSaved: driver.driverStats?.carbonSaved || 0,
+    recentTrips: recentTrips.map(trip => ({
+      origin: trip.origin,
+      destination: trip.destination,
+      status: trip.status,
+      createdAt: trip.createdAt,
+      completedAt: trip.completedAt,
+      cancellationReason: trip.cancellationReason,
+      cancelledBy: trip.cancelledBy,
+      cancelledAt: trip.cancelledAt
+    }))
   });
 }));
 

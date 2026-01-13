@@ -7,11 +7,15 @@ const router = express.Router();
 
 // Get driver's vehicle details
 router.get('/details', authenticateToken, asyncHandler(async (req, res, next) => {
+  console.log('[Vehicle] Fetching details for user ID:', req.user?.id);
   const user = await User.findById(req.user.id);
   
   if (!user) {
+    console.error('[Vehicle] User not found in database for ID:', req.user?.id);
     return next(new AppError('User not found', 404));
   }
+  
+  console.log('[Vehicle] User found:', user.email, 'Type:', user.userType);
 
   if (user.userType !== 'driver') {
     return next(new AppError('Only drivers can access vehicle details', 403));
