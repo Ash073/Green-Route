@@ -48,7 +48,7 @@ export default function DriverDashboard() {
       setLoadingUsers(true);
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `http://localhost:5000/api/trips/nearby-users/${user._id}`,
+        `https://green-route-3.onrender.com/api/trips/nearby-users/${user._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setNearbyUsers(response.data.nearbyUsers || []);
@@ -63,7 +63,7 @@ export default function DriverDashboard() {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `http://localhost:5000/api/trips/driver/status/${user._id}`,
+        `https://green-route-3.onrender.com/api/trips/driver/status/${user._id}`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const stats = response.data.driver.stats;
@@ -118,7 +118,7 @@ export default function DriverDashboard() {
       };
       
       await axios.post(
-        `http://localhost:5000/api/trips/driver/set-online`,
+        `https://green-route-3.onrender.com/api/trips/driver/set-online`,
         { 
           isOnline: newStatus, 
           location,
@@ -169,7 +169,7 @@ export default function DriverDashboard() {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `http://localhost:5000/api/trips/driver/available-rides?radius=10`,
+        `https://green-route-3.onrender.com/api/trips/driver/available-rides?radius=10`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       setAvailableRides(response.data.availableRides || []);
@@ -183,7 +183,7 @@ export default function DriverDashboard() {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await axios.get(
-        `http://localhost:5000/api/trips/driver/incoming-requests`,
+        `https://green-route-3.onrender.com/api/trips/driver/incoming-requests`,
         { headers: { Authorization: `Bearer ${token}` } }
       );
       const requests = response.data.incomingRequests || [];
@@ -205,7 +205,7 @@ export default function DriverDashboard() {
       setRespondingTo(tripId);
       const token = localStorage.getItem('accessToken');
       await axios.post(
-        `http://localhost:5000/api/trips/driver/accept-ride/${tripId}`,
+        `https://green-route-3.onrender.com/api/trips/driver/accept-ride/${tripId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -227,7 +227,7 @@ export default function DriverDashboard() {
       setRespondingTo(tripId);
       const token = localStorage.getItem('accessToken');
       await axios.post(
-        `http://localhost:5000/api/trips/driver/reject-ride/${tripId}`,
+        `https://green-route-3.onrender.com/api/trips/driver/reject-ride/${tripId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -376,7 +376,7 @@ export default function DriverDashboard() {
             route: storedRoute ? JSON.parse(storedRoute) : null
           };
           await axios.post(
-            `http://localhost:5000/api/trips/driver/set-online`,
+            `https://green-route-3.onrender.com/api/trips/driver/set-online`,
             body,
             { headers: { Authorization: `Bearer ${token}` } }
           );
@@ -393,7 +393,7 @@ export default function DriverDashboard() {
     try {
       const token = localStorage.getItem('accessToken');
       await axios.post(
-        `http://localhost:5000/api/trips/driver/update-location`,
+        `https://green-route-3.onrender.com/api/trips/driver/update-location`,
         { 
           coordinates,
           address: 'Current Location'
@@ -457,7 +457,7 @@ export default function DriverDashboard() {
       try {
         const token = localStorage.getItem('accessToken');
         if (!token) return;
-        const url = 'http://localhost:5000/api/trips/driver/set-online';
+        const url = 'https://green-route-3.onrender.com/api/trips/driver/set-online';
         const payload = JSON.stringify({ isOnline: false });
         fetch(url, {
           method: 'POST',
