@@ -6,6 +6,7 @@ import { authenticateToken } from './middleware/auth.js';
 import { validateTripData } from './validators/inputValidator.js';
 import { getCache, setCache, delCache } from './utils/cache.js';
 import { createLogger } from './utils/logger.js';
+import { driverLocationRateLimiter, tripCheckRateLimiter } from './middleware/rateLimit.js';
 
 const router = express.Router();
 
@@ -480,7 +481,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 };
 
 // Find nearby users going in similar direction (for drivers)
-router.get('/nearby-users/:driverId', asyncHandler(async (req, res, next) => {
+router.get('/nearby-users/:driverId', driverLocationRateLimiter, asyncHandler(async (req, res, next) => {
   const { driverId } = req.params;
   const radiusKm = 1; // 1km radius
   
@@ -544,7 +545,7 @@ router.get('/nearby-users/:driverId', asyncHandler(async (req, res, next) => {
 }));
 
 // Check if a driver has accepted user's trip
-router.get('/check-driver-match/:userId', asyncHandler(async (req, res, next) => {
+router.get('/check-driver-match/:userId', tripCheckRateLimiter, asyncHandler(async (req, res, next) => {
   const { userId } = req.params;
   
   // Find user's in-progress trip with a matched driver that has accepted
@@ -649,7 +650,7 @@ router.patch('/:tripId/user-response', asyncHandler(async (req, res, next) => {
 // ========== DRIVER-CENTRIC RIDE SHARING ENDPOINTS ==========
 
 // Update driver online status, current location, and active route
-router.post('/driver/set-online', asyncHandler(async (req, res, next) => {
+router.post('/driver/set-online', driverLocationRateLimiter, asyncHandler(async (req, res, next) => {
   const driverId = req.user.userId;
   const { isOnline, location, route } = req.body;
   

@@ -4685,3 +4685,19 @@
   "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
   "userId": "6965f3e7549bc70d5c7232ff"
 }
+[2026-01-13T15:58:22.510Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}
+[2026-01-13T15:58:22.729Z] [ErrorHandler] [WARN] Client Error: Driver not found
+{
+  "statusCode": 404,
+  "message": "Driver not found",
+  "method": "GET",
+  "path": "/api/trips/driver/status/6965f3e7549bc70d5c7232ff",
+  "userId": "6965f3e7549bc70d5c7232ff"
+}

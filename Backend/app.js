@@ -7,7 +7,7 @@ import routesRoutes from './routesRoutes.js';
 import emissionRoutes from './emissionRoutes.js';
 import vehicleRoutes from './vehicleRoutes.js';
 import { errorHandler, notFound } from './middleware/errorHandler.js';
-import { globalRateLimiter, authRateLimiter } from './middleware/rateLimit.js';
+import { globalRateLimiter, authRateLimiter, driverLocationRateLimiter, tripCheckRateLimiter } from './middleware/rateLimit.js';
 import analyticsRoutes from './analyticsRoutes.js';
 import { setupMorganLogger, createLogger } from './utils/logger.js';
 import { requireDB } from './middleware/dbConnection.js';
