@@ -1266,8 +1266,8 @@ router.post('/user/update-location', asyncHandler(async (req, res, next) => {
 router.get('/driver-profile/:driverId', authenticateToken, asyncHandler(async (req, res, next) => {
   const { driverId } = req.params;
   
-  // Get driver details
-  const driver = await User.findById(driverId).select('name email phoneNumber vehicleType driverStats');
+  // Get driver details with vehicle info
+  const driver = await User.findById(driverId).select('name email phoneNumber vehicleType vehicleDetails driverStats profileImage');
   
   if (!driver) {
     return next(new AppError('Driver not found', 404));
@@ -1286,10 +1286,13 @@ router.get('/driver-profile/:driverId', authenticateToken, asyncHandler(async (r
   
   res.json({
     success: true,
+    driverId: driver._id,
     name: driver.name,
     email: driver.email,
     phoneNumber: driver.phoneNumber,
+    profileImage: driver.profileImage,
     vehicleType: driver.vehicleType,
+    vehicleDetails: driver.vehicleDetails || {},
     totalTrips: driver.driverStats?.totalTrips || 0,
     averageRating: driver.driverStats?.averageRating || 5,
     totalEarnings: driver.driverStats?.totalEarnings || 0,
