@@ -156,7 +156,7 @@ cd Backend
 cp .env.production .env
 # Update .env with your values
 NODE_ENV=production npm start
-# Visit http://localhost:5000/api/health
+# Visit https://green-route-3.onrender.com/api/health
 ```
 
 ---

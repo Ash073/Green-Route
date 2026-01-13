@@ -106,7 +106,7 @@ export const fetchAlternativeRoutes = async (origin, destination, mode = 'drivin
     // Call backend endpoint instead of directly calling external APIs
     // This avoids CORS issues and keeps API keys secure
     const response = await axios.post(
-      'http://localhost:5000/api/routes/alternatives',
+      'https://green-route-3.onrender.com/api/routes/alternatives',
       {
         origin,
         destination,

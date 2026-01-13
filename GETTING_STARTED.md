@@ -46,7 +46,7 @@ On Your Network: http://xxx.xxx.xxx.xxx:3002
 
 ### 1. Health Check
 ```bash
-curl http://localhost:5000/api/health
+curl https://green-route-3.onrender.com/api/health
 ```
 
 ### 2. Test Signup
@@ -197,7 +197,7 @@ LOG_LEVEL=debug
 
 ### Frontend `.env.local`
 ```
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=https://green-route-3.onrender.com/api
 REACT_APP_MAPBOX_TOKEN=your-mapbox-token
 REACT_APP_ENV=development
 ```
@@ -383,7 +383,7 @@ cd Backend && npm install package-name --save
 tail -f Backend/logs/2026-01-08.log
 
 # Test API endpoint
-curl http://localhost:5000/api/health
+curl https://green-route-3.onrender.com/api/health
 ```
 
 ---

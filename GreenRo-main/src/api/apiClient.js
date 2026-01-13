@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 // API Configuration with fallback
-const API_URL = process.env.REACT_APP_API_URL || 'http://localhost:5000/api';
+const API_URL = process.env.REACT_APP_API_URL || 'https://green-route-3.onrender.com/api';
 
 // Log API URL in development
 if (process.env.NODE_ENV === 'development') {

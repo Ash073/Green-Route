@@ -371,7 +371,7 @@ export default function NavigationPage() {
 
       console.log("Saving trip:", tripData);
 
-      const response = await axios.post("http://localhost:5000/api/trips/save", tripData, { 
+      const response = await axios.post("https://green-route-3.onrender.com/api/trips/save", tripData, { 
         headers: { 
           Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json'
@@ -408,7 +408,7 @@ export default function NavigationPage() {
     const pollForAcceptance = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:5000/api/trips/${savedTripId}`,
+          `https://green-route-3.onrender.com/api/trips/${savedTripId}`,
           { headers: { Authorization: `Bearer ${token}` } }
         );
         

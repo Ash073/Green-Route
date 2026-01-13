@@ -9,7 +9,7 @@ npm install  # First time only
 npm run dev  # Start with nodemon
 # or: node server.js
 ```
-**Server runs on:** `http://localhost:5000`
+**Server runs on:** `https://green-route-3.onrender.com`
 
 ### Frontend
 ```bash
@@ -37,7 +37,7 @@ LOG_LEVEL=debug
 
 ### Frontend (.env.local)
 ```
-REACT_APP_API_URL=http://localhost:5000/api
+REACT_APP_API_URL=https://green-route-3.onrender.com/api
 REACT_APP_MAPBOX_TOKEN=pk.eyJ1IjoieWVzYXN3aW5pMTUwOCIsImEiOiJjbWZjd3l0ZWkwM2FjMmxzYmR1d2liYWsxIn0.hL64DI3xihWFknOwxEa8qA
 REACT_APP_ENV=development
 ```
@@ -307,7 +307,7 @@ Uses Node's built-in test runner with an in-memory MongoDB.
 
 ### Test Signup
 ```bash
-curl -X POST http://localhost:5000/api/auth/signup \
+curl -X POST https://green-route-3.onrender.com/api/auth/signup \
   -H "Content-Type: application/json" \
   -d '{
     "name": "Test User",
@@ -318,7 +318,7 @@ curl -X POST http://localhost:5000/api/auth/signup \
 
 ### Test Login
 ```bash
-curl -X POST http://localhost:5000/api/auth/login \
+curl -X POST https://green-route-3.onrender.com/api/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "email": "test@example.com",
@@ -328,7 +328,7 @@ curl -X POST http://localhost:5000/api/auth/login \
 
 ### Test Protected Route (with token)
 ```bash
-curl -X GET http://localhost:5000/api/auth/me \
+curl -X GET https://green-route-3.onrender.com/api/auth/me \
   -H "Authorization: Bearer YOUR_TOKEN_HERE"
 ```
 

@@ -24,7 +24,7 @@ export default function PostRideRequestModal({ tripId, onClose, onSuccess }) {
           };
           // Update user's location immediately
           await axios.post(
-            `http://localhost:5000/api/trips/user/update-location`,
+            `https://green-route-3.onrender.com/api/trips/user/update-location`,
             { 
               coordinates,
               address: 'Current Location'
@@ -37,7 +37,7 @@ export default function PostRideRequestModal({ tripId, onClose, onSuccess }) {
       }
       
       const response = await axios.post(
-        `http://localhost:5000/api/trips/user/post-ride-request/${tripId}`,
+        `https://green-route-3.onrender.com/api/trips/user/post-ride-request/${tripId}`,
         {},
         { headers: { Authorization: `Bearer ${token}` } }
       );

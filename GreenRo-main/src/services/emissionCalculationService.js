@@ -81,7 +81,7 @@ const getVehicleMapping = (vehicleType, mode) => {
 const calculateWithEmissionAPI = async (distance, mode, vehicleType, origin, destination) => {
   try {
     // Use backend endpoint to avoid CORS issues with direct external API calls
-    const response = await axios.post('http://localhost:5000/api/emissions/calculate', {
+    const response = await axios.post('https://green-route-3.onrender.com/api/emissions/calculate', {
       distance: distance,  // in meters
       mode: mode,
       vehicleType: vehicleType,

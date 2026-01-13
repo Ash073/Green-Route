@@ -1,7 +1,7 @@
 // Carbon Tracking Service for managing user's environmental impact
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:5000/api';
+const API_BASE_URL = 'https://green-route-3.onrender.com/api';
 
 export const saveTrip = async (tripData) => {
   try {
