@@ -111,31 +111,42 @@ export default function MapPage() {
 
     return () => {
       try {
-        // Remove custom layers first
+        // IMPORTANT: Remove custom layers FIRST before removing the source
         const layerIds = [
           'directions-route-line-primary',
           'directions-route-line-alternate',
           'directions-route-line-alternate-2',
           'directions-route-line-alternate-3'
         ];
+        
+        // Remove all layers that depend on the 'directions' source
         layerIds.forEach(layerId => {
-          if (map.getLayer(layerId)) {
-            map.removeLayer(layerId);
+          try {
+            if (map.getLayer(layerId)) {
+              map.removeLayer(layerId);
+            }
+          } catch (e) {
+            console.warn(`Error removing layer ${layerId}:`, e?.message || e);
           }
         });
 
-        // Remove the directions source if present before the control tries to clean it up
-        if (map.getSource('directions')) {
-          map.removeSource('directions');
-        }
-
-        // Now remove the directions control
-        if (directions && map.hasControl(directions)) {
+        // Now remove the directions control (which removes the source)
+        if (directionsRef.current && map.hasControl(directionsRef.current)) {
           try {
-            map.removeControl(directions);
+            map.removeControl(directionsRef.current);
           } catch (e) {
             console.warn('Error removing directions control:', e?.message || e);
           }
+        }
+
+        // Remove the source only if it still exists and wasn't cleaned up by the control
+        try {
+          if (map.getSource('directions')) {
+            map.removeSource('directions');
+          }
+        } catch (e) {
+          // Source may already be removed, that's fine
+          console.warn('Source already removed:', e?.message || e);
         }
 
         // Finally remove the map instance
