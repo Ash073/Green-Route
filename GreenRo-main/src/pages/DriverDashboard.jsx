@@ -117,7 +117,10 @@ export default function DriverDashboard() {
         address: 'Current Location'
       };
       
-      await axios.post(
+      console.log('📤 Going online with route:', driverRoute);
+      console.log('📍 Location:', coordinates);
+      
+      const response = await axios.post(
         `https://green-route-3.onrender.com/api/trips/driver/set-online`,
         { 
           isOnline: newStatus, 
@@ -126,6 +129,9 @@ export default function DriverDashboard() {
         },
         { headers: { Authorization: `Bearer ${token}` } }
       );
+      
+      console.log('✅ Set-online response:', response.data);
+      
       setIsOnline(newStatus);
       // Persist online state and route locally for refresh resilience
       if (newStatus) {
@@ -144,6 +150,7 @@ export default function DriverDashboard() {
         setDriverRoute(null);
       }
     } catch (error) {
+      console.error('❌ Error during set-online:', error);
       alert('Error updating online status: ' + error.message);
     } finally {
       setOnlineLoading(false);
@@ -188,6 +195,13 @@ export default function DriverDashboard() {
       );
       const requests = response.data.incomingRequests || [];
       const prevCount = incomingCount;
+      
+      console.log('📥 Incoming Requests Response:', {
+        totalRequests: requests.length,
+        debugInfo: response.data.debugInfo,
+        message: response.data.message
+      });
+      
       setIncomingRequests(requests);
       setIncomingCount(requests.length);
       
@@ -196,7 +210,7 @@ export default function DriverDashboard() {
         playNotificationSound();
       }
     } catch (error) {
-      console.error("Error fetching incoming requests:", error);
+      console.error("❌ Error fetching incoming requests:", error.response?.data || error.message);
     }
   };
 

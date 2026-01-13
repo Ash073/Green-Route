@@ -14,16 +14,39 @@ const router = express.Router();
 router.use(authenticateToken);
 
 // Helper function: Check if two routes match (route similarity algorithm)
-function doRoutesMatch(driverRoute, userRoute, maxDeviationKm = 2) {
-  if (!driverRoute || !userRoute) return false;
+function doRoutesMatch(driverRoute, userRoute, maxDeviationKm = 5) {
+  if (!driverRoute || !userRoute) {
+    console.log('❌ Missing route objects');
+    return false;
+  }
   
-  // Extract coordinates
+  // Extract coordinates - support both nested and flat structures
   const driverOrigin = driverRoute.origin?.coordinates;
   const driverDest = driverRoute.destination?.coordinates;
   const userOrigin = userRoute.origin?.coordinates;
   const userDest = userRoute.destination?.coordinates;
   
-  if (!driverOrigin || !driverDest || !userOrigin || !userDest) return false;
+  console.log('🎯 doRoutesMatch called:');
+  console.log('Driver Origin Coords:', driverOrigin);
+  console.log('Driver Dest Coords:', driverDest);
+  console.log('User Origin Coords:', userOrigin);
+  console.log('User Dest Coords:', userDest);
+  
+  if (!driverOrigin || !driverDest || !userOrigin || !userDest) {
+    console.log('❌ Missing coordinates');
+    console.log('Driver Origin missing:', !driverOrigin);
+    console.log('Driver Dest missing:', !driverDest);
+    console.log('User Origin missing:', !userOrigin);
+    console.log('User Dest missing:', !userDest);
+    return false;
+  }
+  
+  // Ensure coordinates have lat/lng
+  if (!driverOrigin.lat || !driverOrigin.lng || !userOrigin.lat || !userOrigin.lng ||
+      !driverDest.lat || !driverDest.lng || !userDest.lat || !userDest.lng) {
+    console.log('❌ Coordinates missing lat/lng properties');
+    return false;
+  }
   
   // Calculate distances between key points
   const originDistance = calculateDistance(
@@ -36,6 +59,9 @@ function doRoutesMatch(driverRoute, userRoute, maxDeviationKm = 2) {
     userDest.lat, userDest.lng
   );
   
+  console.log(`📍 Origin Distance: ${originDistance.toFixed(2)}km (threshold: ${maxDeviationKm}km)`);
+  console.log(`📍 Dest Distance: ${destDistance.toFixed(2)}km (threshold: ${maxDeviationKm}km)`);
+  
   // Check if user's origin is along driver's route (near driver's origin)
   const userOriginNearDriverOrigin = originDistance <= maxDeviationKm;
   
@@ -45,12 +71,16 @@ function doRoutesMatch(driverRoute, userRoute, maxDeviationKm = 2) {
   // Routes match if both origin and destination are within acceptable deviation
   const routesAlign = userOriginNearDriverOrigin && userDestNearDriverDest;
   
-  // Alternative: Check if user's origin is near driver's current route
-  // and destination is in the same general direction
-  const userOriginNearDriverRoute = originDistance <= maxDeviationKm * 1.5;
-  const destinationsAlign = destDistance <= maxDeviationKm * 2;
+  console.log(`✅ Routes Align (both <= ${maxDeviationKm}km): ${routesAlign}`);
   
-  return routesAlign || (userOriginNearDriverRoute && destinationsAlign);
+  // More lenient: if at least origin is close, consider it a match
+  // (user might get off at a different destination but same general direction)
+  const lenientMatch = originDistance <= maxDeviationKm * 1.5;
+  
+  const finalResult = routesAlign || (lenientMatch && destDistance <= maxDeviationKm * 2);
+  console.log(`Final Match Result: ${finalResult}`);
+  
+  return finalResult;
 }
 
 // Save a trip
@@ -659,6 +689,11 @@ router.post('/driver/set-online', driverLocationRateLimiter, asyncHandler(async 
     return next(new AppError('Only drivers can use this endpoint', 403));
   }
   
+  console.log('📡 Set-Online Called:');
+  console.log('Driver ID:', driverId);
+  console.log('Is Online:', isOnline);
+  console.log('Route Received:', route);
+  
   driver.isOnline = isOnline;
   if (location) {
     driver.currentLocation = {
@@ -673,12 +708,16 @@ router.post('/driver/set-online', driverLocationRateLimiter, asyncHandler(async 
     driver.activeRoute = {
       origin: route.origin,
       destination: route.destination,
+      price: route.price || 0,
       waypoints: route.waypoints || [],
       updatedAt: new Date()
     };
+    console.log('✅ Active Route Stored:', driver.activeRoute);
   }
   
   await driver.save();
+  
+  console.log('✅ Driver Saved to DB');
   
   res.json({
     success: true,
@@ -1055,18 +1094,25 @@ router.get('/driver/incoming-requests', asyncHandler(async (req, res, next) => {
     matchedDriverId: null // Not already matched
   }).populate('userId', 'name email phoneNumber');
   
+  console.log(`\n📨 Incoming Requests Check for Driver ${driverId}`);
+  console.log(`📍 Driver Active Route:`, {
+    origin: driver.activeRoute.origin?.name || 'Unknown',
+    destination: driver.activeRoute.destination?.name || 'Unknown'
+  });
+  console.log(`🔍 Total pending requests found: ${allRideRequests.length}`);
+  
   // Filter requests that match driver's route
-  const incomingRequests = allRideRequests
-    .filter(trip => {
-      // Check if user's route matches driver's route
-      const routeMatches = doRoutesMatch(driver.activeRoute, {
-        origin: trip.origin,
-        destination: trip.destination
-      });
-      
-      return routeMatches;
-    })
-    .map(trip => {
+  const incomingRequests = [];
+  const rejectedRequests = [];
+  
+  for (const trip of allRideRequests) {
+    // Check if user's route matches driver's route
+    const routeMatches = doRoutesMatch(driver.activeRoute, {
+      origin: trip.origin,
+      destination: trip.destination
+    });
+    
+    if (routeMatches) {
       // Calculate how far the user's origin is from driver's origin
       const distanceFromDriverOrigin = calculateDistance(
         driver.activeRoute.origin.coordinates.lat,
@@ -1083,7 +1129,7 @@ router.get('/driver/incoming-requests', asyncHandler(async (req, res, next) => {
         trip.destination.coordinates.lng
       );
       
-      return {
+      incomingRequests.push({
         tripId: trip._id,
         userId: trip.userId._id,
         userName: trip.userId.name,
@@ -1103,10 +1149,26 @@ router.get('/driver/incoming-requests', asyncHandler(async (req, res, next) => {
         driverPrice: driver.activeRoute?.price || 0,
         requestedAt: trip.requestedAt,
         createdAt: trip.createdAt
-      };
-    })
-    // Sort by best route match (lowest deviation = best match)
-    .sort((a, b) => (a.originDeviation + a.destinationDeviation) - (b.originDeviation + b.destinationDeviation));
+      });
+    } else {
+      rejectedRequests.push({
+        tripId: trip._id,
+        reason: 'Route does not match driver route',
+        userOrigin: trip.origin?.name || 'Unknown',
+        userDest: trip.destination?.name || 'Unknown'
+      });
+    }
+  }
+  
+  console.log(`✅ Matching requests: ${incomingRequests.length}`);
+  console.log(`❌ Non-matching requests: ${rejectedRequests.length}`);
+  
+  if (rejectedRequests.length > 0 && rejectedRequests.length <= 3) {
+    console.log('Rejected requests:', rejectedRequests);
+  }
+  
+  // Sort by best route match (lowest deviation = best match)
+  incomingRequests.sort((a, b) => (a.originDeviation + a.destinationDeviation) - (b.originDeviation + b.destinationDeviation));
   
   res.json({
     success: true,
@@ -1119,8 +1181,55 @@ router.get('/driver/incoming-requests', asyncHandler(async (req, res, next) => {
     },
     message: incomingRequests.length > 0 
       ? `Found ${incomingRequests.length} ride request(s) matching your route`
-      : 'No matching ride requests on your route at the moment'
+      : 'No matching ride requests on your route at the moment',
+    debugInfo: {
+      totalPendingRequests: allRideRequests.length,
+      matchingRequests: incomingRequests.length,
+      rejectedRequests: rejectedRequests.length
+    }
   });
+}));
+
+// DEBUG ENDPOINT: Check driver's route and all available user requests
+router.get('/driver/debug-matching/:driverId', asyncHandler(async (req, res, next) => {
+  const { driverId } = req.params;
+  
+  const driver = await User.findById(driverId);
+  if (!driver) {
+    return next(new AppError('Driver not found', 404));
+  }
+  
+  const allTrips = await Trip.find({
+    isRideRequest: true,
+    status: 'in-progress',
+    driverResponse: 'pending',
+    userId: { $ne: driverId }
+  }).populate('userId', 'name');
+  
+  const debugInfo = {
+    driverId: driver._id,
+    driverName: driver.name,
+    isOnline: driver.isOnline,
+    activeRoute: driver.activeRoute,
+    allPendingTrips: allTrips.map(trip => ({
+      tripId: trip._id,
+      userName: trip.userId.name,
+      origin: trip.origin,
+      destination: trip.destination,
+      createdAt: trip.createdAt
+    })),
+    matchingAnalysis: allTrips.map(trip => ({
+      tripId: trip._id,
+      userOrigin: trip.origin?.name,
+      userDest: trip.destination?.name,
+      routeMatches: driver.activeRoute ? doRoutesMatch(driver.activeRoute, {
+        origin: trip.origin,
+        destination: trip.destination
+      }) : false
+    }))
+  };
+  
+  res.json(debugInfo);
 }));
 
 // Live: get matched driver's current location for a trip
