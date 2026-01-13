@@ -228,25 +228,40 @@ router.get('/notifications/:userId', authenticateToken, asyncHandler(async (req,
 // Mark notification as read
 router.patch('/notifications/:notificationId/mark-read', authenticateToken, asyncHandler(async (req, res, next) => {
   const { notificationId } = req.params;
+  const userId = req.user.userId;
   
-  const user = await User.findOne({ 
-    _id: req.user.userId,
-    'notifications._id': notificationId 
-  });
+  try {
+    // Try to mark as read first
+    const updateResult = await User.findByIdAndUpdate(
+      userId,
+      {
+        $set: { 'notifications.$[elem].read': true }
+      },
+      {
+        arrayFilters: [{ 'elem._id': notificationId }],
+        new: true
+      }
+    );
 
-  if (!user) {
-    return next(new AppError('Notification not found', 404));
+    if (updateResult) {
+      return res.json({
+        success: true,
+        message: 'Notification marked as read'
+      });
+    }
+
+    // If not found by _id, try removing it
+    await User.findByIdAndUpdate(userId, {
+      $pull: { notifications: { _id: notificationId } }
+    });
+
+    res.json({
+      success: true,
+      message: 'Notification removed'
+    });
+  } catch (error) {
+    return next(new AppError('Error updating notification: ' + error.message, 400));
   }
-
-  // Mark as read by removing it (or add a 'read' field if you want to keep history)
-  await User.findByIdAndUpdate(req.user.userId, {
-    $pull: { notifications: { _id: notificationId } }
-  });
-
-  res.json({
-    success: true,
-    message: 'Notification marked as read'
-  });
 }));
 
 export default router;
