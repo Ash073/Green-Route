@@ -41,15 +41,18 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
   }, [userId, hasActiveTrip, pollInterval, onMatch, driverOffer]);
 
   const handleViewProfile = async () => {
-    if (!driverOffer?.driverId) return;
+    if (!driverOffer?.driverId && !driverOffer?.matchedDriverId) return;
+    
+    const profileId = driverOffer.driverId || driverOffer.matchedDriverId;
     
     try {
       setLoadingProfile(true);
-      const response = await apiClient.get(`/trips/driver-profile/${driverOffer.driverId}`);
+      const response = await apiClient.get(`/trips/driver-profile/${profileId}`);
       setDriverDetails(response.data);
       setShowDriverProfile(true);
     } catch (error) {
-      alert("Error loading driver profile: " + error.message);
+      console.error("Error loading driver profile:", error);
+      alert("Error loading driver profile: " + (error.response?.data?.message || error.message));
     } finally {
       setLoadingProfile(false);
     }
@@ -130,35 +133,60 @@ export default function DriverMatchNotification({ userId, hasActiveTrip = false,
         >
           <h2 style={{ margin: "0 0 1.5rem 0", color: "#2c3e50" }}>👤 Driver Profile</h2>
           
-          <div style={{ background: "#f8f9fa", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" }}>
-            <h3 style={{ margin: "0 0 1rem 0", color: "#27ae60" }}>{driverDetails.name}</h3>
-            <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
-              <div>
-                <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Rating</p>
-                <p style={{ margin: "0.25rem 0", color: "#f39c12", fontWeight: "600", fontSize: "1.2rem" }}>
-                  ⭐ {driverDetails.averageRating || "4.8"}/5
-                </p>
-              </div>
-              <div>
-                <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Total Trips</p>
-                <p style={{ margin: "0.25rem 0", color: "#3498db", fontWeight: "600", fontSize: "1.2rem" }}>
-                  🚗 {driverDetails.totalTrips || 0}
-                </p>
-              </div>
-            </div>
+        <div style={{ background: "#f8f9fa", borderRadius: "12px", padding: "1.5rem", marginBottom: "1.5rem" }}>
+          <h3 style={{ margin: "0 0 1rem 0", color: "#27ae60" }}>{driverDetails.name}</h3>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem", marginBottom: "1rem" }}>
             <div>
-              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Vehicle</p>
-              <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontWeight: "500", textTransform: "capitalize" }}>
-                {driverDetails.vehicleType || "Economy Car"}
+              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Rating</p>
+              <p style={{ margin: "0.25rem 0", color: "#f39c12", fontWeight: "600", fontSize: "1.2rem" }}>
+                ⭐ {driverDetails.averageRating || "4.8"}/5
               </p>
             </div>
-            <div style={{ marginTop: "0.75rem" }}>
-              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Carbon Saved</p>
-              <p style={{ margin: "0.25rem 0", color: "#27ae60", fontWeight: "600" }}>
-                🌱 {driverDetails.carbonSaved || 0} kg CO₂
+            <div>
+              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Total Trips</p>
+              <p style={{ margin: "0.25rem 0", color: "#3498db", fontWeight: "600", fontSize: "1.2rem" }}>
+                🚗 {driverDetails.totalTrips || 0}
               </p>
             </div>
           </div>
+          <div style={{ marginBottom: "1rem" }}>
+            <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Vehicle Type</p>
+            <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontWeight: "500", textTransform: "capitalize" }}>
+              {driverDetails.vehicleType || "Economy Car"}
+            </p>
+          </div>
+          {driverDetails.vehicleDetails && (
+            <div style={{ background: "white", padding: "0.75rem", borderRadius: "8px", marginBottom: "1rem" }}>
+              <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Vehicle Details</p>
+              {driverDetails.vehicleDetails.make && (
+                <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontSize: "0.9rem" }}>
+                  <strong>Make:</strong> {driverDetails.vehicleDetails.make} {driverDetails.vehicleDetails.model}
+                </p>
+              )}
+              {driverDetails.vehicleDetails.registrationNumber && (
+                <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontSize: "0.9rem" }}>
+                  <strong>Registration:</strong> {driverDetails.vehicleDetails.registrationNumber}
+                </p>
+              )}
+              {driverDetails.vehicleDetails.seatingCapacity && (
+                <p style={{ margin: "0.25rem 0", color: "#2c3e50", fontSize: "0.9rem" }}>
+                  <strong>Seating:</strong> {driverDetails.vehicleDetails.seatingCapacity} persons
+                </p>
+              )}
+              {driverDetails.vehicleDetails.fuelType && (
+                <p style={{ margin: "0.25rem 0", color: "#27ae60", fontSize: "0.9rem" }}>
+                  <strong>Fuel Type:</strong> {driverDetails.vehicleDetails.fuelType}
+                </p>
+              )}
+            </div>
+          )}
+          <div>
+            <p style={{ margin: "0.25rem 0", color: "#7f8c8d", fontSize: "0.85rem" }}>Carbon Saved</p>
+            <p style={{ margin: "0.25rem 0", color: "#27ae60", fontWeight: "600" }}>
+              🌱 {driverDetails.carbonSaved || 0} kg CO₂
+            </p>
+          </div>
+        </div>
 
           <h4 style={{ margin: "1.5rem 0 1rem 0", color: "#2c3e50" }}>📊 Recent Trip History</h4>
           <div style={{ maxHeight: "300px", overflowY: "auto" }}>

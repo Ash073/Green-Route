@@ -13,11 +13,12 @@ import LiveTracking from "./pages/LiveTracking";
 import Navbar from "./components/NavBar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import PersistentLiveTracker from "./components/PersistentLiveTracker";
+import DriverNotifications from "./components/DriverNotifications";
 import "./styles/modern-ui.css";
 import "./styles/premium-rideshare.css";
 
 function AppContent() {
-  const { isAuthenticated, loading } = useAuth();
+  const { isAuthenticated, loading, user } = useAuth();
 
   if (loading) {
     return (
@@ -93,6 +94,7 @@ function AppContent() {
           } 
         />
       </Routes>
+      {user?.userType === 'driver' && user?._id && <DriverNotifications driverId={user._id} />}
       <LiveTrackingOverlay />
     </Router>
   );
