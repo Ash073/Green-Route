@@ -10,6 +10,7 @@ import { errorHandler, notFound } from './middleware/errorHandler.js';
 import { globalRateLimiter, authRateLimiter } from './middleware/rateLimit.js';
 import analyticsRoutes from './analyticsRoutes.js';
 import { setupMorganLogger, createLogger } from './utils/logger.js';
+import { requireDB } from './middleware/dbConnection.js';
 
 dotenv.config();
 
@@ -71,6 +72,15 @@ app.get('/api/health', (req, res) => {
   });
 });
 
+// DB health check
+app.get('/api/health/db', (req, res) => {
+  const state = require('mongoose').connection.readyState; // 0=disconnected,1=connected,2=connecting,3=disconnecting
+  res.json({
+    success: true,
+    connectionState: state,
+  });
+});
+
 // Root endpoint
 app.get('/', (req, res) => {
   res.json({
@@ -91,7 +101,7 @@ app.get('/', (req, res) => {
 
 // Routes
 logger.debug('Registering routes');
-app.use('/api/auth', authRateLimiter, authRoutes);
+app.use('/api/auth', requireDB, authRateLimiter, authRoutes);
 app.use('/api/trips', tripRoutes);
 app.use('/api/routes', routesRoutes);
 app.use('/api/analytics', analyticsRoutes);

@@ -14,3 +14,42 @@
 [2026-01-13T06:44:21.802Z] [Server] [INFO] 🚀 Server running on port 5000
 [2026-01-13T06:44:21.808Z] [Server] [INFO] 📡 Environment: production
 [2026-01-13T06:44:21.813Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T07:09:39.520Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T07:09:39.534Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T07:09:39.541Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T07:09:41.518Z] [Server] [ERROR] MongoDB connection failed:
+{
+  "error": "bad auth : Authentication failed."
+}
+[2026-01-13T07:09:41.525Z] [Server] [WARN] Server will continue but database features will not work
+[2026-01-13T07:09:41.531Z] [Server] [INFO] To fix MongoDB connection:
+[2026-01-13T07:09:41.537Z] [Server] [INFO] 1. Check if MongoDB Atlas cluster is running
+[2026-01-13T07:09:41.542Z] [Server] [INFO] 2. Verify IP address is whitelisted (0.0.0.0/0 for testing)
+[2026-01-13T07:09:41.549Z] [Server] [INFO] 3. Confirm MONGODB_URI in .env is correct
+[2026-01-13T07:09:41.557Z] [Server] [INFO] 4. Check network connection
+[2026-01-13T07:09:41.570Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T07:09:41.576Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T07:09:41.581Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T07:10:58.054Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T07:10:58.066Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T07:10:58.072Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T07:10:59.408Z] [Server] [ERROR] MongoDB connection failed:
+{
+  "error": "bad auth : Authentication failed."
+}
+[2026-01-13T07:10:59.415Z] [Server] [WARN] Server will continue but database features will not work
+[2026-01-13T07:10:59.421Z] [Server] [INFO] To fix MongoDB connection:
+[2026-01-13T07:10:59.427Z] [Server] [INFO] 1. Check if MongoDB Atlas cluster is running
+[2026-01-13T07:10:59.433Z] [Server] [INFO] 2. Verify IP address is whitelisted (0.0.0.0/0 for testing)
+[2026-01-13T07:10:59.448Z] [Server] [INFO] 3. Confirm MONGODB_URI in .env is correct
+[2026-01-13T07:10:59.464Z] [Server] [INFO] 4. Check network connection
+[2026-01-13T07:10:59.483Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T07:10:59.503Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T07:10:59.510Z] [Server] [INFO] ✅ Backend is ready to accept requests
+[2026-01-13T07:13:58.484Z] [App] [INFO] CORS enabled for origins: https://green-route-4.onrender.com, http://localhost:3000, http://localhost:3001, http://localhost:3002
+[2026-01-13T07:13:58.494Z] [Server] [INFO] Starting application in production environment
+[2026-01-13T07:13:58.501Z] [DB] [INFO] Attempting to connect to MongoDB...
+[2026-01-13T07:14:00.099Z] [DB] [INFO] MongoDB connected successfully to database: greenroute
+[2026-01-13T07:14:00.113Z] [Server] [INFO] 🚀 Server running on port 5000
+[2026-01-13T07:14:00.122Z] [Server] [INFO] 📡 Environment: production
+[2026-01-13T07:14:00.132Z] [Server] [INFO] ✅ Backend is ready to accept requests
