@@ -747,7 +747,7 @@ export default function LandingPage() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2024 GreenRoute. All rights reserved. Made with 💚 for the planet</p>
+            <p>&copy; 2025 GreenRoute. All rights reserved. Made with 💚 for the planet</p>
           </div>
         </div>
       </footer>
